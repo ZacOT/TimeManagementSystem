@@ -1,0 +1,30 @@
+.header{
+    font-family: 'Titillium Web';
+    position: relative;
+    height: 200px;
+    border:1px solid black;
+}
+.header a {
+    display: flex;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.header-title{
+    float: left;
+    margin-left: 50;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header-buttons{
+    display: flex;
+    float: right;
+    margin-right: 50;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+

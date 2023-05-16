@@ -13,6 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Dashboard
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
+});
+Route::get('/sidebar', function () {
+    return view('sidebar');
+});
+Route::get('/kanban', function () {
+    return view('kanban');
+});
+
+
+//Login Register
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'validateLogin']);
+Route::get('/logout', [LogoutController::class, 'logout']);
+
+Route::get('/register', function () {
+    return view('register');
 });

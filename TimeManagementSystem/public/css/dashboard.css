@@ -1,0 +1,15 @@
+.wraper{
+    display: flex;
+    height:100%
+}
+
+.dashboard{
+    flex: 0.85;
+    float:right;
+    font-family: 'Titillium Web';
+    border:1px solid black;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: auto;
+    width: auto;
+}
