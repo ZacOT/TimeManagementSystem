@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\KanbanController;
+use App\Http\Controllers\OKRController;
+use App\Http\Controllers\CalendarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,10 +23,19 @@ Route::get('/', function () {
 Route::get('/sidebar', function () {
     return view('sidebar');
 });
-Route::get('/kanban', function () {
-    return view('kanban');
+
+Route::get('/admin', function () {
+    return view('admin');
 });
 
+Route::get('/kanban', [KanbanController::class, 'getKanbanBoard']);
+
+Route::post('/insertKanbanCategory', [KanbanController::class, 'insertKanbanCategory']);
+
+Route::get('/objectives', [OKRController::class, 'getObjectives']);
+Route::get('/okr', [OKRController::class, 'getOKR']);
+
+Route::get('/calendar', [CalendarController::class, 'getCalendar']);
 
 //Login Register
 Route::get('/login', [LoginController::class, 'index'])->name('login');

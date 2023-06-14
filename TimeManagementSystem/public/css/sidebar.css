@@ -6,7 +6,7 @@
     padding: 0;
     margin-top: 10px;
     width: 200px;
-    background-color: black;
+    background: black;
     height: 100%;
     overflow: auto;
   }
@@ -23,7 +23,7 @@
 
   /* Links on mouse-over */
   .sidebar a:hover:not(.active) {
-    background-color: #555;
+    background: #555;
     color: white;
   }
 
