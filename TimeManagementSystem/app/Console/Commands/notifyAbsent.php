@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Binarcode\LaravelMailator\Tests\Fixtures\InvoiceReminderMailable;
-use Binarcode\LaravelMailator\Tests\Fixtures\SerializedConditionCondition;
+use binarcode\LaravelMailator\Tests\Fixtures\SerializedConditionCondition;
 
 class notifyAbsent extends Command
 {

@@ -5,16 +5,18 @@
 
 <title>TMS - Kanban Board</title>
 <link href="<?php echo asset('css/okr.css') ?>" rel="stylesheet">
-<script defer src="<?php echo asset('js/kanban.js') ?>"></script>
+<link href="<?php echo asset('css/popup.css') ?>" rel="stylesheet">
+<script defer src="<?php echo asset('js/popup.js') ?>"></script>
 </head>
 
 <body>
     <link rel="stylesheet" href="<?php echo asset('css/dashboard.css') ?>" type="text/css">
 
-    <body>
+
         <div class="wraper">
             @include('sidebar')
             <div class="dashboard">
+                <form action="/insertLeave" method="post">
                 <div class="objective" style="background-color:peachpuff;">
                     <p style="text-align:center;">Student Leave Application Form</p>
                 </div>
@@ -24,7 +26,7 @@
                     <p>Email: {{$student->email}}</p>
                     <p>Contact: {{$student->contact_no}}</p>
                     <p>From: <input type="date"> To: <input type="date"></p>
-                    <p>Reason: <input type="text"></p>
+                    <p>Reason:</p><textarea></textarea>
                     <p>Supporting Documents: <input type="file" onchange="loadFile(event)" ></p>
                     <img id="output" width="200px" height="200px"/>
 
@@ -46,10 +48,30 @@
                             <td style="border:solid 1px black;">Unapproved</td>
                         </tr>
                         <tr>
-                            <td colspan="3"style="border:solid 1px black;">Add Class</td>
+                            <td colspan="3"style="border:solid 1px black;">
+                                <button data-modal-target="#modal">Add Class</button> 
+                            </td>
                         </tr>
                     </table>
                 </div>
+                </form>
+                <!-- Modal -->
+                <div class="modal" id="modal">
+                            <div class="modal-header" style="background-color:peachpuff;">
+                                <div class="title" style="text-align:center">Add Affected Course</div>
+                                <button data-close-button class="close-button">&times;</button>
+                            </div>
+                            <div class="modal-body" style="background-color:bisque;">
+                                <form action="" method="post">
+                                    <select>
+                                        @foreach ($classes as $class)
+                                            <option>[{{  $class->course_code }}]{{  $class->course_name }} | {{ $class->classtype_name }} |  {{ $class->class_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="overlay"></div>
             </div>
         </div>
     </body>
@@ -66,5 +88,4 @@
             }
         };
     </script>
-
 </html>
