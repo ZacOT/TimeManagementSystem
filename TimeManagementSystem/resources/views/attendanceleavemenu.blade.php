@@ -4,8 +4,7 @@
     @include('header')
 
     <title>TMS - Kanban Board</title>
-    <link href="<?php echo asset('css/okr.css') ?>" rel="stylesheet">
-    <script defer src="<?php echo asset('js/kanban.js') ?>"></script>
+    <link href="<?php echo asset('css/attendance.css') ?>" rel="stylesheet">
 </head>
 
 <body>
@@ -16,12 +15,14 @@
             @include('sidebar')
 
             <div class="dashboard">
-                <div>
-                    ATTENDANCE
+                <div class="container">
+                <div class="attcontainer">
+                    <a href="/attendance">ATTENDANCE</a>
                 </div>
-                <div>
-                    LEAVE APPLICATION
+                <div class="leavecontainer">
+                    <a href="/leave">LEAVE APPLICATION</a>
                 </div>
+            </div>
             </div>
         </div>
     </body>

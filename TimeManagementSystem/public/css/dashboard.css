@@ -12,6 +12,7 @@
     margin-left: 10px;
     height: 100vh;
     width: auto;
+    overflow-y: scroll;
 }
 
 .progress_graphs{

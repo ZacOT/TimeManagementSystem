@@ -4,8 +4,77 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe33f98a750b8c5a51b30c78bd3fab21",
+    "content-hash": "3de8f6f4ef845fecf4f9bbccaeffe073",
     "packages": [
+        {
+            "name": "binarcode/laravel-mailator",
+            "version": "5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BinarCode/laravel-mailator.git",
+                "reference": "afa2b77f3b5d7726de61b8bcaf359c2412f22767"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BinarCode/laravel-mailator/zipball/afa2b77f3b5d7726de61b8bcaf359c2412f22767",
+                "reference": "afa2b77f3b5d7726de61b8bcaf359c2412f22767",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0|^10.0",
+                "opis/closure": "^3.6",
+                "php": "^8.0|^8.1"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.2|^7.0.6",
+                "nunomaduro/collision": "^5.3|^6.1|^7.0",
+                "nunomaduro/larastan": "^2.0",
+                "orchestra/testbench": "^8.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpunit/phpunit": "^10.0",
+                "spatie/laravel-ray": "^1.9",
+                "spatie/test-time": "^1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Binarcode\\LaravelMailator\\LaravelMailatorServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelMailator": "Mailator"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Binarcode\\LaravelMailator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduard Lupacescu",
+                    "email": "eduard.lupacescu@binarcode.com",
+                    "homepage": "https://binarcode.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel email scheduler",
+            "homepage": "https://github.com/binarcode/laravel-mailator",
+            "keywords": [
+                "binarcode",
+                "laravel-mailator"
+            ],
+            "support": {
+                "issues": "https://github.com/BinarCode/laravel-mailator/issues",
+                "source": "https://github.com/BinarCode/laravel-mailator/tree/5.1.0"
+            },
+            "time": "2023-04-18T15:51:24+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -2296,6 +2365,71 @@
                 }
             ],
             "time": "2023-02-08T01:06:31+00:00"
+        },
+        {
+            "name": "opis/closure",
+            "version": "3.6.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opis/closure.git",
+                "reference": "3d81e4309d2a927abbe66df935f4bb60082805ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opis/closure/zipball/3d81e4309d2a927abbe66df935f4bb60082805ad",
+                "reference": "3d81e4309d2a927abbe66df935f4bb60082805ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.4 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "jeremeamia/superclosure": "^2.0",
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "functions.php"
+                ],
+                "psr-4": {
+                    "Opis\\Closure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marius Sarca",
+                    "email": "marius.sarca@gmail.com"
+                },
+                {
+                    "name": "Sorin Sarca",
+                    "email": "sarca_sorin@hotmail.com"
+                }
+            ],
+            "description": "A library that can be used to serialize closures (anonymous functions) and arbitrary objects.",
+            "homepage": "https://opis.io/closure",
+            "keywords": [
+                "anonymous functions",
+                "closure",
+                "function",
+                "serializable",
+                "serialization",
+                "serialize"
+            ],
+            "support": {
+                "issues": "https://github.com/opis/closure/issues",
+                "source": "https://github.com/opis/closure/tree/3.6.3"
+            },
+            "time": "2022-01-27T09:35:39+00:00"
         },
         {
             "name": "phpoption/phpoption",

@@ -1,16 +1,23 @@
 a.nostyle:link {
     text-decoration: inherit;
-    color: inherit;
+    color:darkcyan;
     cursor: auto;
     cursor:pointer;
 }
     
 a.nostyle:visited {
     text-decoration: inherit;
-    color: inherit;
+    color:darkcyan;
     cursor: auto;
     cursor:pointer;
 }
+
+.add{
+    text-decoration: wavy;
+    color: green;
+    cursor:pointer;
+}
+
 
 .objective{
     border: 2px solid black;
@@ -57,13 +64,15 @@ a.nostyle:visited {
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .tbody{
     margin-left: 20px;
     margin-right: 20px;
     width: 95%;
+}
+
+.trow{
+    width: 100%;
     display: flex;
-    height: 20px;
 }
 
 .tcell{
@@ -74,3 +83,73 @@ a.nostyle:visited {
     padding-bottom: 2px;
 }
 
+.blackbutton{
+    color: #fff!important;
+    background-color: #000!important;
+    padding-bottom: 10px;
+    border: none;
+    display: inline-block;
+    margin: 20px 25px;
+    padding: 16px 30px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.editbutton{
+    color: #fff!important;
+    background-color: #000!important;
+    padding-bottom: 10px;
+    border: none;
+    display: inline-block;
+    margin: 10px 10px;
+    padding: 5px 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+/* Dragula CSS */
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    list-style-type: none;
+}
+.gu-hide {
+    display: none !important;
+}
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+.gu-transit {
+    opacity: 0.2;
+}
+/* Demo info */
+.section {
+    padding: 20px;
+    text-align: center;
+}
+.section a {
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+}
+.section h4 {
+    font-weight: 400;
+}
+.section h4 a {
+    font-weight: 600;
+}

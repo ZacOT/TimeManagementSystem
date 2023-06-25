@@ -7,6 +7,7 @@
     <div class="wraper">
         @include('sidebar')
         <div class="dashboard">
+            <div style="text-align:center">Welcome, {{ Auth::user()->f_name; }} to your Dashboard</div>
             <div class="progress_graphs">
             PROGRESS
                 <div class="graph_div">

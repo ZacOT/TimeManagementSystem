@@ -1,0 +1,56 @@
+.container{
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 95%;
+    align-content: center;
+}
+
+.attcontainer{
+    width: 200px;
+    float: center;
+    text-align: center;
+    border: 2px solid black;
+}
+.leavecontainer{
+    width: 200px;
+    float: center;
+    text-align: center;
+    border: 2px solid black;
+}
+
+.theader{
+    background-color: cadetblue;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 95%;
+    display: flex;
+    height: auto;
+}
+
+.thcell{
+    border: 1px solid black;
+    flex: 1;
+    height: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.tbody{
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 95%;
+}
+
+.trow{
+    width: 100%;
+    display: flex;
+}
+
+.tcell{
+    border: 1px solid black;
+    flex: 1;
+    height: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}

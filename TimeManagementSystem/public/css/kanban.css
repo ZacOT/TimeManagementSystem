@@ -5,6 +5,14 @@
     text-decoration: none;
 }
 
+.btn_add{
+    border: none;
+    background: #00aeff;
+    font-style: bold;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
 ul {
     list-style-type: none;
     margin: 0;

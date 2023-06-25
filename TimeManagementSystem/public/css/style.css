@@ -38,6 +38,7 @@ h2 {
     display: block; }
 
 #calendar-container {
+  flex:1;
   position: fixed;
   top: 0;
   left: 20px;

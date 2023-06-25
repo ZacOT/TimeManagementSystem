@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    @include('header')
+@include('header')
 
-    <title>TMS - Kanban Board</title>
-    <link href="<?php echo asset('css/popup.css') ?>" rel="stylesheet">
-    <link href="<?php echo asset('css/kanban.css') ?>" rel="stylesheet">
-    <script defer src="<?php echo asset('js/popup.js') ?>"></script>
-    <script defer src="<?php echo asset('js/kanban.js') ?>"></script>
+<title>TMS - Kanban Board</title>
+<link href="<?php echo asset('css/popup.css') ?>" rel="stylesheet">
+<link href="<?php echo asset('css/kanban.css') ?>" rel="stylesheet">
+<link href="<?php echo asset('css/okr.css') ?>" rel="stylesheet">
+<script defer src="<?php echo asset('js/popup.js') ?>"></script>
+<script defer src="<?php echo asset('js/kanban.js') ?>"></script>
 </head>
 
 <body>
@@ -18,8 +19,7 @@
             @include('sidebar')
             <div class="dashboard">
                 <div>
-                    <button data-modal-target="#modal">Add Category</button>
-                    <button data-modal-target="#emodal">Create Card</button>
+                    <button class="editbutton" data-modal-target="#modal" style="margin-top:25px;margin-left:110px;">Add Category</button>
                 </div>
 
 
@@ -29,26 +29,23 @@
                         <li class="drag-column drag-column-on-hold">
                             <span class="drag-column-header">
                                 <h2>To Do</h2>
-                                <div>
-                                <button class="btn_option"> 
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="drag-header-more" viewBox="0 0 24 24" fill="#FFFFFF">
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" fill="black"></path> 
-                                    </svg>
-                                </button>
-                                <button class="btn_option" data-modal-target="#ccmodal">
-                                    <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                                    </svg>
-                                </button>
+                                <div style="display:flex;">
+                                    <div>
+                                        <button class="btn_add">+</button>
+                                    </div>
+                                    <button class="btn_option" data-modal-target="#ccmodal">
+                                        <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
+                                            <path d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </span>
-
                             <div class="drag-options" id="options1"></div>
-
                             <ul class="drag-inner-list" id="1">
-                                <li class="drag-item" draggable="true">TEST</li>
-                                <li class="drag-item" draggable="true"></li>
+                                <a href="#" style="text-decoration:none; color:black;">
+                                    <li class="drag-item"><b>To Do Many Things</b> <br><br><br>Due: 03-07-2023</li>
+                                </a>
                             </ul>
                         </li>
 
@@ -60,71 +57,25 @@
                                         <path d="M0 0h24v24H0z" fill="none" />
                                         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                                     </svg></button>
-            
                             </span>
-
                             <div class="drag-options" id="options1"></div>
-
                             <ul class="drag-inner-list" id="1">
-                                <li class="drag-item" draggable="true"></li>
-                                <li class="drag-item" draggable="true"></li>
                             </ul>
                         </li>
 
                         <li class="drag-column drag-column-on-hold">
                             <span class="drag-column-header">
-                                <h2>On Hold</h2>
+                                <h2>Completed</h2>
                                 <button class="btn_option" data-modal-target="#modal">
                                     <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
                                         <path d="M0 0h24v24H0z" fill="none" />
                                         <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                                     </svg></button>
-            
+
                             </span>
-
                             <div class="drag-options" id="options1"></div>
-
                             <ul class="drag-inner-list" id="1">
-                                <li class="drag-item" draggable="true"></li>
-                                <li class="drag-item" draggable="true"></li>
-                            </ul>
-                        </li>
-
-                        <li class="drag-column drag-column-on-hold">
-                            <span class="drag-column-header">
-                                <h2>On Hold</h2>
-                                <button class="btn_option" data-modal-target="#modal">
-                                    <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                                    </svg></button>
-            
-                            </span>
-
-                            <div class="drag-options" id="options1"></div>
-
-                            <ul class="drag-inner-list" id="1">
-                                <li class="drag-item" draggable="true"></li>
-                                <li class="drag-item" draggable="true"></li>
-                            </ul>
-                        </li>
-
-                        <li class="drag-column drag-column-on-hold">
-                            <span class="drag-column-header">
-                                <h2>On Hold</h2>
-                                <button class="btn_option" data-modal-target="#modal">
-                                    <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                                    </svg></button>
-            
-                            </span>
-
-                            <div class="drag-options" id="options1"></div>
-
-                            <ul class="drag-inner-list" id="1">
-                                <li class="drag-item" draggable="true"></li>
-                                <li class="drag-item" draggable="true"></li>
+                            <a data-modal-target="#emodal" style="text-decoration:none; color:black;"><li class="drag-item"><b>Complete Kanban</b><br>Complete the kanban add edit functions <br><br>Due: 03-07-2023 <text style="float:right">DONE</text></li></a>
                             </ul>
                         </li>
 
@@ -150,19 +101,20 @@
                                 <button data-close-button class="close-button">&times;</button>
                             </div>
                             <div class="modal-body">
-                            <form action="" method="post">
-                                    <input type="text" placeholder="Title"></input><br>
-                                    <input type="text" placeholder="Description"></input><br>
-                                    Due: <input type="datetime-local" placeholder="Due"></input><br>
-                                    <button type="submit">Edit</button>
+                                <form action="" method="post">
+                                    <input type="text" placeholder="Title" value="Complete Kanban"></input><br>
+                                    <textarea name="description" placeholder="Description" value="Complete the kanban add edit functions" form="okrform" style="width:200px; height:70px">Complete the kanban add edit functions</textarea><br>
+                                    Due: <input type="datetime-local" placeholder="Due" value="2023-07-03T10:00:00.00"></input><br>
+                                    Category:<select><option>To Do</option><option>On Hold</option><option>Completed</option></select><br>
+                                    <button type="submit" class="editbutton">Edit Card</button>
                                 </form>
                             </div>
                         </div>
                         <div id="overlay"></div>
 
 
-                <!--Edit Popup-->
-                <div class="modal" id="ccmodal">
+                        <!--Edit Popup-->
+                        <div class="modal" id="ccmodal">
                             <div class="modal-header">
                                 <div class="title">Create Card</div>
                                 <button data-close-button class="close-button">&times;</button>
@@ -170,7 +122,7 @@
                             <div class="modal-body">
                                 <form>
                                     <input type="text" placeholder="Title"></input><br>
-                                    <input type="text" placeholder="Description"></input><br>
+                                    <textarea for="description" placeholder="Description"><br>
                                     Due: <input type="datetime-local" placeholder="Due"></input><br>
                                     <button type="submit">Create Card</button>
                                 </form>

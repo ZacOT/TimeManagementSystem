@@ -1,0 +1,6 @@
+{
+    "require": {
+        "unicodeveloper/novu": "^1.0",
+        "tplaner/when": "^3.1"
+    }
+}

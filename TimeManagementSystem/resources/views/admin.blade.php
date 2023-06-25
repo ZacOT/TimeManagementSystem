@@ -4,7 +4,7 @@
     @include('header')
 
     <title>TMS - Kanban Board</title>
-    <link href="<?php echo asset('css/okr.css') ?>" rel="stylesheet">
+    <link href="<?php echo asset('css/admin.css') ?>" rel="stylesheet">
     <script defer src="<?php echo asset('js/kanban.js') ?>"></script>
 </head>
 
@@ -14,15 +14,16 @@
     <body>
         <div class="wraper">
             @include('sidebar')
-
-            <div class="dashboard">
-                Admin Control Panel
-                <div>
-                    <div>
-                        Manage Users
-                    </div>
-                    <div>
-                        Manage Courses
+            
+                <div class="dashboard">
+                <div class="container">
+                    <div style="text-align:center;">Admin Control Panel</div>
+                    <div style="text-align:center ;display:flex; width:1000px; margin-left:auto; margin-right:auto; margin-top:50px">
+                        <div style="flex:1"><a href="manageusers"><img src="images/manageuser.png"/><br>Manage Users</a></div>
+                        <div style="flex:1"><a href="managecourses"><img src="images/managecourse.png"><br>Manage Courses</a></div>
+                        <div style="flex:1"><a href="managesemesters"><img src="images/managesemester.png"><br>Manage Semesters</a></div>
+                        <div style="flex:1"><a href="manageclasstype"><img src="images/class.png"><br>Manage Class Types</a></div>
+                        <div style="flex:1"><a href="manageprograms"><img src="images/program.png"><br>Manage Programs</a></div>
                     </div>
                 </div>
             </div>

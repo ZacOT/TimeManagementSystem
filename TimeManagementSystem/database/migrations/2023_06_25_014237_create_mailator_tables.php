@@ -1,0 +1,91 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Binarcode\LaravelMailator\Models\MailatorLog;
+use Binarcode\LaravelMailator\Models\MailatorSchedule;
+
+class CreateMailatorTables extends Migration
+{
+    public function up()
+    {
+        Schema::create(config('mailator.schedulers_table_name', 'mailator_schedulers'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->string('name', 100)->nullable();
+            $table->boolean('stopable')->default(false);
+            $table->boolean('unique')->default(false);
+            $table->string('tags', 100)->nullable();
+            $table->text('mailable_class')->nullable();
+            $table->nullableMorphs('targetable');
+            $table->text('action')->nullable();
+            $table->unsignedInteger('delay_minutes')->nullable()->comment('Number of hours/days.');
+            $table->enum('time_frame_origin', [
+                MailatorSchedule::TIME_FRAME_ORIGIN_BEFORE,
+                MailatorSchedule::TIME_FRAME_ORIGIN_AFTER,
+            ])->nullable()->comment('Before or after event.');
+            $table->timestamp('timestamp_target')->nullable();
+            $table->json('constraints')->nullable()->comment('Offset target.');
+            $table->json('recipients')->nullable();
+            $table->text('when')->nullable();
+            $table->string('frequency_option')->default(MailatorSchedule::FREQUENCY_OPTIONS_ONCE)->comment('How often send email notification.');
+
+            $table->timestamp('last_sent_at')->nullable();
+            $table->timestamp('last_failed_at')->nullable();
+            $table->timestamp('completed_at')->nullable();
+            $table->text('failure_reason')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create(config('mailator.logs_table', 'mailator_logs'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->json('recipients')->nullable();
+            $table->foreignId('mailator_schedule_id')->nullable();
+            $table->enum('status', [
+                MailatorLog::STATUS_FAILED,
+                MailatorLog::STATUS_SENT,
+            ]);
+            $table->dateTime('action_at')->nullable();
+            $table->text('exception')->nullable();
+            $table->timestamps();
+
+            /**
+             * Foreign keys
+             */
+            $table->foreign('mailator_schedule_id')
+                ->references('id')
+                ->on(config('mailator.schedulers_table_name', 'mailator_schedulers'));
+        });
+
+        Schema::create('mail_templates', function (Blueprint $table) {
+            $table->id();
+            $table->uuid('uuid');
+
+            $table->string('name')->nullable();
+            $table->string('from_email')->nullable();
+            $table->string('from_name')->nullable();
+            $table->string('subject')->nullable();
+
+            $table->longText('html')->nullable();
+            $table->longText('email_html')->nullable();
+            $table->longText('webview_html')->nullable();
+
+            $table->string('mailable_class')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('mail_template_placeholders', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('mail_template_id')->constrained('mail_templates')->cascadeOnDelete();
+            $table->string('name');
+            $table->string('description');
+            $table->json('meta')->nullable();
+            $table->timestamps();
+
+            /** * Indexes */
+            $table->index('mail_template_id');
+        });
+    }
+}

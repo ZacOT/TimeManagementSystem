@@ -10,4 +10,8 @@ class CalendarController extends Controller
     public function getCalendar(){
         return view('calendar');
     }
+
+    public function getEvents(){
+        return view('calendar');
+    }
 }
