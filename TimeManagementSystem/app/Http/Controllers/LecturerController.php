@@ -16,13 +16,14 @@ class LecturerController extends Controller
 
     public function getAttendance(){
 
+        $cur_sem = DB::table('semesters')->latest('start_date')->first();
         $attendances = DB::table('attendance_list')
         ->join('class', 'attendance_list.class_id', '=', 'class.class_id')
         ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
         ->join('users', 'class.lecturer_id', '=', 'users.id')
         ->join('course', 'class.course_id', '=', 'course.course_id')
         ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-        ->where('class.lecturer_id', Auth::user()->id)
+
         ->get();
 
         $classes = DB::table('class')
@@ -30,44 +31,61 @@ class LecturerController extends Controller
         ->join('users', 'class.lecturer_id', '=', 'users.id')
         ->join('course', 'class.course_id', '=', 'course.course_id')
         ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-        ->where('lecturer_id', Auth::user()->id)
+
+        ->where('class.sem_id', $cur_sem->sem_id)
         ->get();
         return view('attendance', compact('classes','attendances'));
     }
-    public function insertAttendance(){
-        $classes = DB::table('class')
-        ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
-        ->join('users', 'class.lecturer_id', '=', 'users.id')
-        ->join('course', 'class.course_id', '=', 'course.course_id')
-        ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-        ->where('lecturer_id', Auth::user()->id)
+    public function insertAttendance(Request $request){
+        $class_id = $request->input('class_id');
+        $date = $request->input('date');
+        $starttime = $request->input('starttime');
+        $endtime = $request->input('endtime');
+        
+        //Create new Attendance list then grab ID
+        $data = array(
+            'class_id' => $class_id,
+            'att_date' => $date,
+            'att_starttime' => $starttime,
+            'att_endtime' => $endtime,
+        );
+        $id = DB::table('attendance_list')->insertGetId($data);
+        
+        //Grab Students that belong in class and insert into attendance
+        $students = DB::table('class_linker')->where('class_id',$class_id)
+        ->join('users', 'class_linker.student_id', '=', 'users.id')
         ->get();
 
-        
-        return view('attendance', compact('classes'));
+        foreach ($students as $student){
+            
+            $attdata = array(
+                'att_id'=>$id,
+                'student_id'=>$student->id,
+                'status'=>0, //default
+            );
+
+            DB::table('attendance_linker')->insert($attdata);
+        }
+
+        $redir = 'attendancelist?att_id=';
+        $redir .= strval($id);
+        return redirect($redir);
     }
 
     public function getAttendanceList(Request $request){
         
-        $attendance = DB::table('attendance_list')->where('att_id', $request->att_id)->first();
+        $class = DB::table('class')->where('class_id', $request->class_id)->first();
 
         $students = DB::table('attendance_linker')
         ->join('users', 'attendance_linker.student_id', '=', 'users.id')
-        ->where('att_id', $attendance->att_id)
+        ->where('att_id',$request->att_id)
         ->get();
 
-        $class= DB::table('class')
-        ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
-        ->join('users', 'class.lecturer_id', '=', 'users.id')
-        ->join('course', 'class.course_id', '=', 'course.course_id')
-        ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-        ->where('class_id', $attendance->class_id)
-        ->first();
 
-        $redir = 'attendancelist?att_id=';
-        $redir .= strval($attendance->att_id);
+        $redir = 'assignclass?class_id=';
+        $redir .= strval($class->class_id);
 
-        return view("/attendancelist", compact('attendance','students','class'));
+        return view("/assignclass", compact('class','students'));
 
     }
 
@@ -89,6 +107,12 @@ class LecturerController extends Controller
         $redir = 'attendancelist?att_id=';
         $redir .= strval($att_id);
         return redirect($redir);
+    }
+
+    public function getRelatedLeaves(){
+        $leaves =DB::table('leave_approval')->get();
+
+        return view('leaveapprovallist');
     }
 
     public function debug(Request $request){

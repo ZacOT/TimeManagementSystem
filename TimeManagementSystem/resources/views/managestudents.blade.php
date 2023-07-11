@@ -101,6 +101,9 @@
                     <input type="text" id="editMatrics" name="matrics" placeholder="Matrics" style="width:200px; margin-bottom:10px"></input><br>
                     <input class="editbutton" type="submit" value="Edit Student">
                 </form>
+                <form>
+                    <input class="deletebutton" type="submit" value="Delete Student">
+                </form>
             </div>
         </div>
         <div id="overlay"></div>

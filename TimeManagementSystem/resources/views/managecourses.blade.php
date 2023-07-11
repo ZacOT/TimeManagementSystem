@@ -62,7 +62,7 @@
                 </form>
             </div>
         </div>
-        <!-- Add Course Modal -->
+        <!-- Edit Course Modal -->
         <div class="modal" id="editmodal">
             <div class="modal-header">
                 <div class="title">Edit Course</div>
@@ -74,7 +74,7 @@
                     <input type="hidden" id="editCourseID" name="course_id" value="">
                     <input type="text" id="editCourseName" name="course_name" placeholder="Course Name" style="width:200px; margin-bottom:10px"></input><br>
                     <input type="text" id="editCourseCode" name="course_code" placeholder="Code" style="width:200px; margin-bottom:10px"></input><br>
-                    <input class="editbutton" type="submit" value="Add Course">
+                    <input class="editbutton" type="submit" value="Edit Course">
                 </form>
             </div>
         </div>

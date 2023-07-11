@@ -19,6 +19,9 @@ class IsLecturer
         if (Auth::user() && Auth::user()->role == 1){
             return $next($request);
         }
+        if(Auth::user() && Auth::user()->role == 2){
+            return $next($request);
+        }
         
         if (Auth::user()){
             return redirect('/');

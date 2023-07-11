@@ -12,30 +12,27 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
+    #ADMIN
     public function getAdmin()
     {
         return view('admin');
     }
+
+    #USERS
     public function getUsers()
     {   
         $users = DB::table('users')->get();
         return view('manageusers', compact('users'));
     }
 
+    #STUDENTS
     public function getStudents()
     {   
         $students = DB::table('users')->where("role", 0)->get();
         return view('managestudents', compact('students'));
-    }
-
-    public function getFaculty()
-    {   
-        $facultys = DB::table('users')->whereIn("role", [1,2])->get();
-        return view('managefaculty', compact('facultys'));
-    }
-
-    
+    }  
     public function insertStudent(Request $request){
+        //Validate All Fields of Add Student Form
         $this->validate($request, [
             'username'=>'required|max:255|unique:users,username',
             'password'=>'required|confirmed|max:32',
@@ -47,6 +44,7 @@ class AdminController extends Controller
             'matrics'=>'required|max:15',
         ]);
 
+        //Get all fields
         $username = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');
@@ -55,7 +53,8 @@ class AdminController extends Controller
         $l_name = $request->input('l_name');
         $matrics = $request->input('matrics');
         $role = 0;
-
+        
+        //Insert into Data Array
         $data=array(
             "username"=>$username,
             "password"=>$password,
@@ -66,8 +65,10 @@ class AdminController extends Controller
             "matrics"=>$matrics,
             "role"=>$role);
 
+        //Insert Data Array into MYSQL Table
         DB::table('users')->insert($data);
-
+        
+        //Reroute back to manage student page with reflected changes
         return redirect()->route('managestudents');
     }
 
@@ -125,6 +126,12 @@ class AdminController extends Controller
         return redirect()->route('managestudents');
     }
 
+    #FACULTY
+    public function getFaculty()
+    {   
+        $facultys = DB::table('users')->whereIn("role", [1,2])->get();
+        return view('managefaculty', compact('facultys'));
+    }
     public function insertFaculty(Request $request){
         
         $this->validate($request, [
@@ -217,6 +224,7 @@ class AdminController extends Controller
         return redirect()->route('managefaculty');
     }
 
+    #COURSES
     public function getCourses(Request $request){
         $courses = DB::table('course')->get();
         return view('managecourses', compact('courses'));
@@ -258,12 +266,76 @@ class AdminController extends Controller
         return redirect()->route('managecourses');
     }
 
+    #SEMESTERS
     public function getSemesters(Request $request){
         $semesters = DB::table('semesters')->get();
 
         return view('managesemesters', compact('semesters'));
     }
 
+
+    public function insertSemester(Request $request){
+
+        $this->validate($request, [
+            'semester_name'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required',
+        ]);
+        
+        $semester_name = $request->input('semester_name');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        
+        $data=array(
+            "sem_name"=>$semester_name,
+            "start_date"=>$start_date,
+            "end_date"=>$end_date
+        );
+
+        DB::table('semesters')->insert($data);
+
+        return redirect()->route('managesemesters');
+    }
+
+    public function editSemester(Request $request){
+
+        $this->validate($request, [
+            'sem_id' => 'required',
+            'semester_name'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required',
+        ]);
+        
+        $sem_id = $request->input('sem_id');
+        $semester_name = $request->input('semester_name');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        
+        $data=array(
+            "sem_id"=>$sem_id,
+            "sem_name"=>$semester_name,
+            "start_date"=>$start_date,
+            "end_date"=>$end_date
+        );
+
+        DB::table('semesters')->where('sem_id', $sem_id)->update($data);
+
+        return redirect()->route('managesemesters');
+    }
+
+    public function deleteSemester(Request $request){
+
+        $this->validate($request, [
+            'sem_id' => 'required'
+        ]);
+
+        $sem_id = $request->input('sem_id');
+
+        DB::table('semesters')->where('sem_id', $sem_id)->delete();
+        return redirect()->route('managesemesters');
+    }
+
+    #PROGRAMS
     public function getPrograms(Request $request){
         $programs = DB::table('programs')
         ->join('users', 'programs.hop_id', '=', 'users.id')
@@ -296,9 +368,18 @@ class AdminController extends Controller
         return redirect()->route('manageprograms');
     }
 
+    public function assignProgram(Request $request){
+        
+        $program = DB::table('programs')->where('program_id', $request->input('program_id'))->first();
+        $students = DB::table('users')->where('role',3)->get();
+
+        return view('assignprogram', compact('program','students'));
+    }
+
+    #CLASS
     public function getClassType(Request $request){
-        $classtype = DB::table('class_type')->get();
-        return view('manageaclasstype', compact('classtype'));
+        $classtypes = DB::table('class_type')->get();
+        return view('manageclasstypes', compact('classtypes'));
     }
 
 

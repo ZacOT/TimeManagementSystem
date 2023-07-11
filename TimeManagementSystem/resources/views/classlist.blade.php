@@ -52,8 +52,14 @@
                             <td>@php echo date("l", strtotime($class->class_firstdate ));@endphp</td>
                             <td>@php echo date("d-m-Y",strtotime($class->class_firstdate)); @endphp</td>
                             <td>@php echo date("h:ia", strtotime($class->class_starttime)); echo " - "; echo date("h:ia",strtotime($class->class_endtime));@endphp</td>
-                            <td style="text-align:right"><button class="editbutton">EDIT</button></td>
-</tr>
+                            <form action="{{  route('assignclass') }}" method="get">
+                            @csrf
+                            <td style="text-align:right;">
+                                <input type="hidden" name="class_id" value="{{ $class->class_id}}">
+                                <button class="editbutton">VIEW</button>
+                            </form>
+                            <button class="editbutton" data-modal-target="#emodal">EDIT</button></td>
+                            </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -106,6 +112,52 @@
                         <label for="starttime">Start Time: </label><input type="time" name="start_time" id="starttime"></input><br> 
                         <label for="endtime">End Time: </label><input type="time" name="end_time" id="endtime"></input><br><br>
                         <input class="editbutton" type="submit" value="Add Class">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Add Class -->
+            <div class="modal" id="emodal">
+                <div class="modal-header">
+                    <div class="title">Edit Class</div>
+                    <button data-close-button class="close-button">&times;</button>
+                </div>
+                <div class="modal-body" style="text-align:center; align-content:center;">
+                    <form action="{{ route('insertclass') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="program" value="{{$program->program_id}}">
+                        <select name="course" placeholder="Course">
+                            <option></option>
+                            @foreach ($courses as $course)
+                            <option value="{{$course->course_id}}">{{$course->course_name}} [{{$course->course_code}}]</option>
+                            @endforeach
+                        </select><br>
+                        <select name="class_type" placeholder="Class Type">
+                            <option></option>
+                            @foreach ($classtypes as $classtype)
+                            <option value="{{$classtype->classtype_id}}">{{$classtype->classtype_name}}</option>
+                            @endforeach
+                        </select><br>
+                        <input type="text" name="class_name" placeholder="Class Name" style="width:470px; height:35px; text-align:center;"><br><br>
+                        <select name="lecturer" placeholder="Assign Lecturer">
+                            <option></option>
+                            @foreach ($lecturers as $lecturer)
+                            <option value="{{$lecturer->id}}">{{$lecturer->f_name}} {{$lecturer->l_name}} [{{$lecturer->matrics}}]</option>
+                            @endforeach
+                        </select><br>
+                        <select name="semester" placeholder="Semester">
+                            <option></option>
+                            @foreach ($semesters as $semester)
+                            <option value="{{$semester->sem_id}}">{{$semester->sem_name}}</option>
+                            @endforeach
+                        </select><br>
+                        <label for="firstdate">First Date: </label><input type="date" name="first_date" id="firstdate"></input><br> 
+                        <label for="starttime">Start Time: </label><input type="time" name="start_time" id="starttime"></input><br> 
+                        <label for="endtime">End Time: </label><input type="time" name="end_time" id="endtime"></input><br><br>
+                        <input class="editbutton" type="submit" value="Edit Class">
+                    </form>
+                    <form>
+                        <input class="deletebutton" type="submit" value="Delete Class">
                     </form>
                 </div>
             </div>

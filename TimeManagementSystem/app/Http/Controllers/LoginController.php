@@ -38,7 +38,7 @@ class LoginController extends Controller
                 return redirect('/attendance')->with('status',Auth::user()->f_name);
             }
             if ($role == 2) {
-                return redirect('/managecourses')->with('status',Auth::user()->f_name);
+                return redirect('/classlist')->with('status',Auth::user()->f_name);
             }
             if ($role == 3) {
                 return redirect('/admin');

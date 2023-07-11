@@ -33,7 +33,13 @@
                                 <td>{{ $program->program_name }}</td>
                                 <td>{{ $program->program_code }}</td>
                                 <td>{{ $program->f_name }}</td>
-                                <td style="text-align:center;"><button class="addbutton" onclick="editBtn('{{ $program->program_name }}','{{ $program->program_code }}','{{ $program->f_name }}','{{ $program->hop_id }}')" data-modal-target="#editmodal">EDIT</button></td>
+                                <form action="{{ route('assignprogram') }}" method="post">
+                                @csrf
+                                <td style="text-align:right;">
+                                    <input type="hidden" name="program_id" value="{{ $program->program_id }}">
+                                </form>
+                                    <button class="addbutton" onclick="editBtn('{{ $program->program_name }}','{{ $program->program_code }}','{{ $program->f_name }}','{{ $program->hop_id }}')" data-modal-target="#editmodal">EDIT</button>
+                                </td>
                             </tr>
                             @endforeach
                         <tfoot>

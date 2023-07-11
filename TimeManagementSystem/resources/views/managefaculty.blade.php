@@ -110,6 +110,9 @@
                     
                     <input class="editbutton" type="submit" value="Edit Student">
                 </form>
+                <form>
+                    <input class="deletebutton" type="submit" value="Delete Student">
+                </form>
             </div>
         </div>
         <div id="overlay"></div>

@@ -13,10 +13,10 @@
     <div class="wraper">
         @include('sidebar')
         <div class="dashboard">
-            <p style="text-align:center">Welcome, {{ Auth::user()->f_name}}. These are your classes attendance lists.</p>
+            <p style="text-align:center">Welcome, {{ Auth::user()->f_name}}. You have missed these classes.</p>
             <div class="container">
                 <div class="attendancelist">
-                    <button class="editbutton" data-modal-target="#modal">New Attendance List</button>
+
                     <table id="att-table">
                         <thead>
                             <th>Course</th>
@@ -25,7 +25,7 @@
                             <th>Day</th>
                             <th>Date</th>
                             <th>Time</th>
-                            <th></th>
+                            <th>STATUS</th>
                         </thead>
                         <tbody>
                             @foreach ($attendances as $attendance)
@@ -36,13 +36,7 @@
                                 <td>@php echo date("l", strtotime($attendance->att_date ));@endphp</td>
                                 <td>@php echo date("d-m-Y",strtotime($attendance->att_date)); @endphp</td>
                                 <td>@php echo date("h:ia",strtotime($attendance->att_starttime)); echo" - ";echo date("h:ia",strtotime($attendance->att_endtime)); @endphp</td>
-                                <td style="text-align:right">
-                                    <form action="/attendancelist" method="post">
-                                        @csrf
-                                        <input type="hidden" name="att_id" value="{{ $attendance->att_id}}">
-                                        <button class="editbutton">VIEW</button>
-                                    </form>
-                                </td>
+                                <td><text style="color:red">ABSENT</td>
                             </tr>
                             @endforeach
                         </tbody>

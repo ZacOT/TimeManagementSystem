@@ -24,25 +24,19 @@
                 <div class="attendancelist">
                     <table id="att-table">
                         <thead>
-                            <th>Semester Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Class Type</th>
                             <th></th>
                         </thead>
                         <tbody>
-                            @foreach ($semesters as $semester)
+                            @foreach ($classtypes as $classtype)
                             <tr>
-                                <td>{{ $semester->sem_name }}</td>
-                                <td>@php echo date("d-m-Y",strtotime($semester->start_date)); @endphp</td>
-                                <td>@php echo date("d-m-Y",strtotime($semester->end_date)); @endphp</td>
-                                <td style="text-align:center;"><button class="addbutton" data-modal-target="#editmodal" onclick="editSemester('{{$semester->sem_id}}', '{{$semester->sem_name}}')">EDIT</button></td>
+                                <td>{{ $classtype->classtype_name }}</td>
+                                <td style="text-align:right;"><button class="addbutton" data-modal-target="#editmodal" onclick="editSemester()">EDIT</button></td>
                             </tr>
                             @endforeach
                         <tfoot>
                             <tr>
-                                <td><button class="addbutton" data-modal-target="#modal">Add Semester</button></td>
-                                <td></td>
-                                <td></td>
+                                <td><button class="addbutton" data-modal-target="#modal">Add Class Type</button></td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -54,42 +48,33 @@
             <!-- Add Course Modal -->
             <div class="modal" id="modal">
                 <div class="modal-header">
-                    <div class="title">Add Semester</div>
+                    <div class="title">Add Class Type</div>
                     <button data-close-button class="close-button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('insertsemester') }}" method="post" id="okrform">
+                    <form action="{{ route('insertclasstype') }}" method="post" id="addclasstype">
                         @csrf
-                        <input type="text" id="addSemesterName" name="semester_name" placeholder="Semester Name" style="width:200px; margin-bottom:10px"></input><br>
-                        <label>Start Date: </label>
-                        <input type="date" id="addSemesterStart" name="start_date" placeholder="startdate" style="width:200px; margin-bottom:10px"></input><br>
-                        <label>End Date: </label>
-                        <input type="date" id="addSemesterStart" name="end_date" placeholder="enddate" style="width:200px; margin-bottom:10px"></input><br>
-                        <input class="editbutton" type="submit" value="Add Semester">
+                        <input type="text" id="addSemesterName" name="classtype_name" placeholder="Class Type" style="width:200px; margin-bottom:10px"></input><br>
+                        <input class="editbutton" type="submit" value="Add Class Type">
                     </form>
                 </div>
             </div>
             <!-- Edit Course Modal -->
             <div class="modal" id="editmodal">
                 <div class="modal-header">
-                    <div class="title">Edit Semester</div>
+                    <div class="title">Edit Class Type</div>
                     <button data-close-button class="close-button">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('editsemester') }}" method="post" id="editcourse">
+                    <form action="{{ route('insertclasstype') }}" method="post" id="editcourse">
                         @csrf
                         <input type="hidden" id="editSemesterID" name="sem_id" value="">
                         <input type="text" id="editSemesterName" name="semester_name" placeholder="Semester Name" style="width:200px; margin-bottom:10px"></input><br>
-                        <label>Start Date: </label>
-                        <input type="date" id="editSemesterStart" name="start_date" placeholder="startdate" style="width:200px; margin-bottom:10px"></input><br>
-                        <label>End Date: </label>
-                        <input type="date" id="editSemesterEnd" name="end_date" placeholder="enddate" style="width:200px; margin-bottom:10px"></input><br>
-                        <input class="editbutton" type="submit" value="Edit Semester">
+                        <input class="editbutton" type="submit" value="Edit Class Type">
                     </form>
 
                     <button class="deletebutton" value="Delete Semester" id="dltBtn">Delete Semester</button>
-
-                    <form action="{{ route('deletesemester') }}" method="post" id="delete" style="display:none;">
+                    <form action="{{ route('insertclasstype') }}" method="post" id="delete" style="display:none;">
                         @csrf
                         <input type="hidden" id="deleteSemesterID" name="sem_id" value="">
                         <text style="color:red;" id="dltText">ARE YOU SURE?</text><br>

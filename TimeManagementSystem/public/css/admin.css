@@ -39,6 +39,23 @@
     cursor: pointer;
     white-space: nowrap;
 }
+.deletebutton{
+    color: #fff!important;
+    background-color: red!important;
+    padding-bottom: 10px;
+    border: none;
+    display: inline-block;
+    margin: 10px 10px;
+    padding: 5px 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
 
 a {
     text-decoration: none;

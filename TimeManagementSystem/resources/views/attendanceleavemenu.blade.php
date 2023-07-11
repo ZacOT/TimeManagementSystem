@@ -20,7 +20,10 @@
                     <a href="/attendance">ATTENDANCE</a>
                 </div>
                 <div class="leavecontainer">
-                    <a href="/leave">LEAVE APPLICATION</a>
+                    <a href="/applyleave">APPLY FOR LEAVE </a>
+                </div>
+                <div class="leavecontainer">
+                    <a href="/leave">CHECK LEAVE APPLICATION</a>
                 </div>
             </div>
             </div>

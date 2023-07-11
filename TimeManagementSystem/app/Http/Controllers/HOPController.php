@@ -67,4 +67,58 @@ class HOPController extends Controller
         DB::table('class')->insert($data);
         return redirect()->route('classlist');
     }
+
+
+    public function getAssign(Request $request){
+        
+
+        $students = DB::table('attendance_linker')
+        ->join('users', 'attendance_linker.student_id', '=', 'users.id')
+        ->get();
+
+        $class= DB::table('class')
+        ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
+        ->join('users', 'class.lecturer_id', '=', 'users.id')
+        ->join('course', 'class.course_id', '=', 'course.course_id')
+        ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
+        ->where('class_id', $request->input('class_id'))
+        ->first();
+
+        return view("/assignstudent", compact('students','class'));
+    }
+    
+    public function getLeaves(Request $request){
+
+        //Get Leaves
+        $leaves = DB::table('leave_application')
+        ->join('users','leave_application.applicant_id','=','users.id')
+        ->join('program_linker','users.id','=','program_linker.student_id')
+        ->join('programs','program_linker.program_id','=','programs.program_id')
+        ->where('programs.hop_id', Auth::user()->id)
+        ->get();
+
+
+        $leaves = DB::table('leave_application')
+        ->where('leave_id', $request->input('leave_id'))
+        ->update(['status', 1]);
+
+        //Get all Leaves
+        $getleaves = DB::table('leave_application')
+        ->where('leave_id', $request->input('leave_id'))
+        ->get();
+    
+        foreach($getleaves as $leave){
+            //Find all connected course leave
+            $leave_id = $leave->leave_id;
+            $approves = DB::table('leave_approval')->where('leave_id', $leave_id)->get();
+            //Check if all course leave is approved
+            foreach($approves as $approve){
+                if($approve->status == 0){
+                    break;
+                }
+                return view('leaveslist', compact('leaves'));
+            }
+        }
+        return view('debug', compact('leaves'));
+    }
 }

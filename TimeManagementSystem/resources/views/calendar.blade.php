@@ -5,30 +5,46 @@
   @include('header')
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar')
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        height: 850,
-        initialView: 'dayGridMonth',
-        events: [
-          {
-            title: 'event test',
-            start: '2023-06-20',
-            description: 'test 123'
-          },
-          {
-            title: 'event test2',
-            start: '2023-06-20',
-            description: 'test 123'
+   document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      center: 'addEventButton'
+    },
+    customButtons: {
+      addEventButton: {
+        text: 'add event...',
+        click: function() {
+          var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+          var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+          var eventtitle = prompt('Enter event title');
+          
+          if (!isNaN(date.valueOf())) { // valid?
+            $.ajax({
+              type: 'POST',
+              url: '/saveToDatabase',
+              data: {"mFormData":mFormData}
+            }).done(function (msg) {
+              alert("Data saved!");
+            });
+            calendar.addEvent({
+              title: eventtitle,
+              start: date,
+              allDay: true
+            });
+            
+          } else {
+            alert('Invalid date.');
           }
-        ],
-        eventClick: function(info) {
-          console.log(info.event.extendedProps.description)
-          alert('Event: ' + info.event.title);
         }
-      })
-      calendar.render()
-    })
+      }
+    }
+  });
+
+  calendar.render();
+});
     
   </script>
 </head>

@@ -8,24 +8,14 @@
         @include('sidebar')
         <div class="dashboard">
             <div style="text-align:center">Welcome, {{ Auth::user()->f_name; }} to your Dashboard</div>
-            <div class="progress_graphs">
-            PROGRESS
-                <div class="graph_div">
-                    <canvas id="graphChart" height="300" width="300"></canvas>
-                </div>
-                <div class="graph_div">
-                    <canvas id="graphChart2" height="300" width="300"></canvas>
-                </div>
-                <div class="graph_div">
-                    <canvas id="graphChart3" height="300" width="300"></canvas>
+            <div style="background-color:black; color:white; margin-top:50px">Notifications</div>
+            <div class="notification_container">
+                <div class="noti_div">
+                    <a href="" style="text-decoration:none; color:blue">Class Absent Notice</a>
+                    <p>You were marked absent for Course1 Lab CS4 on the 27-06-2023</p>
                 </div>
             </div>
-            <div class="notifications">
-                Notications
-            </div>
-            <div class="notes">
-                Notes
-            </div>
+        </div>
         </div>
     </div>
     
@@ -50,6 +40,12 @@
         }]
     },
     options: {
+        plugins:{
+        title:{
+            display:true,
+            text: 'OKR',
+        }
+    },
         responsive: true,
         maintainAspectRatio: false,
         rotation: 270,

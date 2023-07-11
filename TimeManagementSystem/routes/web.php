@@ -54,25 +54,30 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/manageprograms', [AdminController::class, 'getPrograms'])->middleware(Authenticate::class)->name('manageprograms');
     Route::post('/insertprogram', [AdminController::class, 'insertProgram'])->middleware(Authenticate::class)->name('insertprogram');
+    Route::post('/assignprogram', [AdminController::class, 'assignProgram'])->middleware(Authenticate::class)->name('assignprogram');
 
-    Route::get('/manageclasses', [AdminController::class, 'getPrograms'])->middleware(Authenticate::class)->name('manageprograms');
-    Route::post('/insertclass', [AdminController::class, 'insertProgram'])->middleware(Authenticate::class)->name('insertprogram');
+    Route::get('/manageclasstypes', [AdminController::class, 'getClassType'])->middleware(Authenticate::class)->name('manageclasstypes');
+    Route::post('/insertclasstype', [AdminController::class, 'insertClassType'])->middleware(Authenticate::class)->name('insertclasstype');
+    Route::post('/editclasstype', [AdminController::class, 'editClassType'])->middleware(Authenticate::class)->name('editclasstype');
+    Route::post('/deleteclasstype', [AdminController::class, 'deleteClassType'])->middleware(Authenticate::class)->name('deleteclasstype');
 
     Route::get('/managesemesters', [AdminController::class, 'getSemesters'])->middleware(Authenticate::class)->name('managesemesters');
-    Route::post('/insertsemester', [AdminController::class, 'insertProgram'])->middleware(Authenticate::class)->name('insertprogram');
-
-
+    Route::post('/insertsemester', [AdminController::class, 'insertSemester'])->middleware(Authenticate::class)->name('insertsemester');
+    Route::post('/editsemester', [AdminController::class, 'editSemester'])->middleware(Authenticate::class)->name('editsemester');
+    Route::post('/deletesemester', [AdminController::class, 'deleteSemester'])->middleware(Authenticate::class)->name('deletesemester');
  });
 
  /* Head of Program */
 Route::group(['middleware' => ['hop']], function () {
     Route::get('/classlist', [HOPController::class, 'getClassList'])->middleware(Authenticate::class)->name('classlist');
     Route::post('/insertclass', [HOPController::class, 'insertClassList'])->middleware(Authenticate::class)->name('insertclass');
+
+    Route::get('/assignclass', [HOPController::class, 'getAssign'])->middleware(Authenticate::class)->name('assignclass');
 });
 
 /* Lecturer */
 Route::group(['middleware' => ['lecturer']], function () {
-
+    Route::get('/leaveapprovallist', [LecturerController::class, 'getRelatedLeaves'])->middleware(Authenticate::class)->name('leaveapprovallist');
 });
 
 /* User */
@@ -80,10 +85,13 @@ Route::group(['middleware' => ['login']], function () {
 
     Route::get('/', function () {return view('dashboard');})->name('dashboard');
     /* Kanban */
+    Route::get('/workspace', [KanbanController::class, 'getWorkspace'])->middleware(Authenticate::class)->name('workspace');
     Route::get('/kanban', [KanbanController::class, 'getKanbanBoard'])->middleware(Authenticate::class);
-    Route::get('/kanbancard', function () {return view('kanbancard');})->name('kanbancard');
-    Route::post('/insertKanbanCategory', [KanbanController::class, 'insertKanbanCategory'])->middleware(Authenticate::class);
-
+    Route::post('/insertkanbanboard', [KanbanController::class, 'insertKanbanBoard'])->middleware(Authenticate::class)->name('insertkanbanboard');
+    Route::post('/insertkanbancard', [KanbanController::class, 'insertKanbanCard'])->middleware(Authenticate::class)->name('insertkanbancard');
+    Route::post('/insertkanbancategory', [KanbanController::class, 'insertKanbanCategory'])->middleware(Authenticate::class)->name('insertkanbancategory');
+    Route::post('/updatekanbancategory', [KanbanController::class, 'updateKanbanCategory'])->middleware(Authenticate::class)->name('updatekanbancategory');
+    Route::post('/insertcomment', [KanbanController::class, 'insertComment'])->middleware(Authenticate::class)->name('insertcomment');
     /* Objectives */
     Route::get('/objectives', [OKRController::class, 'getObjectives'])->middleware(Authenticate::class)->name('objectives');
     Route::post('/objectives', [OKRController::class, 'insertObjectives'])->middleware(Authenticate::class)->name('objectives');
@@ -110,9 +118,9 @@ Route::post('/attendancelist', [LecturerController::class, 'getAttendanceList'])
 Route::post('/updateattendancelist', [LecturerController::class, 'updateAttendanceList'])->middleware(Authenticate::class)->name('updateattendancelist');
 
 Route::get('/applyleave', [LeaveController::class, 'applyLeave'])->middleware(Authenticate::class)->name('applyleave');
-Route::get('/debug', function () {return view('debug');})->name('debug');
+Route::post('/addselclass', [LeaveController::class, 'addSelClass'])->middleware(Authenticate::class)->name('addselclass');
+Route::get('/debug', [HOPController::class, 'getLeaves'])->name('debug');
 Route::post('/debug', [LecturerController::class, 'debug'])->name('debug');
 
-Route::get('/mails', function () {return view('mails');})->name('mails');
 
 Route::get('/mailtest', function() {Mail::to('bonjour@mailtrap.io’')->send(new MailTest());});

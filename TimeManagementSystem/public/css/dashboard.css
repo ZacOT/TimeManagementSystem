@@ -26,3 +26,17 @@
     margin: 30px;
     border: 1px solid black ;
 }
+
+.notification_container{
+    display: flex;
+    height: 600px;
+    justify-content: space-between;
+    background-color: rgb(216, 216, 216);
+}
+.noti_div{
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    margin: 30px;
+    border: 1px solid black ;
+}

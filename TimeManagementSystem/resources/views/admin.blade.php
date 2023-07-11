@@ -22,7 +22,7 @@
                         <div style="flex:1"><a href="manageusers"><img src="images/manageuser.png"/><br>Manage Users</a></div>
                         <div style="flex:1"><a href="managecourses"><img src="images/managecourse.png"><br>Manage Courses</a></div>
                         <div style="flex:1"><a href="managesemesters"><img src="images/managesemester.png"><br>Manage Semesters</a></div>
-                        <div style="flex:1"><a href="manageclasstype"><img src="images/class.png"><br>Manage Class Types</a></div>
+                        <div style="flex:1"><a href="manageclasstypes"><img src="images/class.png"><br>Manage Class Types</a></div>
                         <div style="flex:1"><a href="manageprograms"><img src="images/program.png"><br>Manage Programs</a></div>
                     </div>
                 </div>

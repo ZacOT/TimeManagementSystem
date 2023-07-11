@@ -39,7 +39,7 @@ class OKRController extends Controller
             "title" => $title,
             "description" => $description,
             "u_id" => $user,
-            "semester_id"=> $semester,
+            "sem_id"=> $semester,
         );
         
         DB::table('objectives')->insert($data);

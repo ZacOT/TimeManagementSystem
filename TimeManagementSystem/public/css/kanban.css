@@ -67,7 +67,7 @@ ul {
     height: 100px;
     background: rgba(0, 0, 0, 0.4);
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: move;
+    cursor: pointer;
 }
 .is-dragging {
     scale: 1.05;
@@ -141,3 +141,27 @@ ul {
     font-weight: 600;
 }
 
+.comment-container{
+    text-align: justify;
+    margin: auto;
+    border: 1px solid black;
+    width: 400px;
+    height: 300px;
+    overflow-y:scroll; 
+    overflow-x:scroll;
+}
+
+.comment-input{
+    margin: auto;
+    border: 1px solid black;
+    width: 400px;
+    height: 100px;
+}
+
+.comment{
+    margin: 5px;
+    border: 1px solid cornflowerblue;
+    background-color:skyblue;
+    width: 390px;
+    height: 100px;
+}
