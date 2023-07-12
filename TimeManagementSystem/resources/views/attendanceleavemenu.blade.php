@@ -17,13 +17,13 @@
             <div class="dashboard">
                 <div class="container">
                 <div class="attcontainer">
-                    <a href="/attendance">ATTENDANCE</a>
+                    <a href="/checkattendance">ATTENDANCE</a>
                 </div>
                 <div class="leavecontainer">
                     <a href="/applyleave">APPLY FOR LEAVE </a>
                 </div>
                 <div class="leavecontainer">
-                    <a href="/leave">CHECK LEAVE APPLICATION</a>
+                    <a href="/leavelist">CHECK LEAVE APPLICATION</a>
                 </div>
             </div>
             </div>

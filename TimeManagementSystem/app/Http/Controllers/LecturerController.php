@@ -123,9 +123,57 @@ class LecturerController extends Controller
     }
 
     public function getRelatedLeaves(){
-        $leaves =DB::table('leave_approval')->get();
+        
+        //related leaves to be approved
+        $leaves = DB::table('leave_approval')
+        ->join('class','leave_approval.class_id','=','class.class_id')
+        ->join('class_type', 'class.class_type','=','class_type.classtype_id')
+        ->join('leave_application', 'leave_approval.leave_id','=','leave_application.leave_id')
+        ->join('users', 'leave_application.applicant_id','=','users.id')
+        ->where('lec_id', Auth::user()->id)
+        ->get();
 
-        return view('leaveapprovallist');
+        return view('leavecourselist',compact('leaves'));
+    }
+
+    public function getLeaveCourseApproval(Request $request){
+
+        //get leave id
+        $leave_id = $request->input('leave_id');
+        $approval_id = $request->input('approval_id');
+        //get leave
+        $leave = DB::table('leave_application')
+        ->join('users','leave_application.applicant_id','=','users.id') //get details of applicant
+        ->where('leave_id',$leave_id)
+        ->first();
+
+        //get applicant
+        $student = DB::table('users')->where('id',$leave->applicant_id)->first();
+        
+        //get related leave approvals
+        $leaveapproval = DB::table('leave_approval')
+        ->join('users','leave_approval.lec_id','=','users.id') //get details of lecturer
+        ->join('class','leave_approval.class_id','=','class.class_id') //get details of class
+        ->join('course','class.course_id','=','course.course_id') //get details of class
+        ->where('approval_id',$approval_id)->first();
+
+
+        return view('leavecourseapproval', compact('student','leave','leaveapproval'));
+    }
+
+    public function approveLeaveCourse(Request $request){
+        $approval_id = $request->input('approval_id');
+        $date = date('Y-m-d');
+
+        $data = array(
+            'comment' => $request->input('comment'),
+            'status' => 1,
+            'date' => $date,
+        );
+
+        DB::table('leave_approval')->where('approval_id',$approval_id)->update($data);
+
+        return redirect()->route('leavecourselist');
     }
 
     public function debug(Request $request){

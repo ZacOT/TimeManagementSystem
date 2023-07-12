@@ -36,7 +36,7 @@ if (Auth::user()->role == 0) {
         <a class='active' href='/attendance'><img src='/images/attendance.png' height='25' width='25'>Attendance</a>
     </div>
     <div class='sidebar-button'>
-        <a class='active' href='/leaveapprovallist'><img src='/images/approval.png' height='25' width='25'>Leave Course Approval</a>
+        <a class='active' href='/leavecourselist'><img src='/images/approval.png' height='25' width='25'>Leave Course Approval</a>
     </div>
     <div class='sidebar-button'>
         <a class='active' href='/workspace'><img src='/images/kanban.png' height='25' width='25'>Kanban Board</a>
@@ -62,6 +62,9 @@ if (Auth::user()->role == 0) {
     </div>
     <div class='sidebar-button'>
         <a class='active' href='/leaveapprovallist'><img src='/images/approval.png' height='25' width='25'>Leave Management</a>
+    </div>
+    <div class='sidebar-button'>
+        <a class='active' href='/leavecourselist'><img src='/images/approval.png' height='25' width='25'>Leave Course Approval</a>
     </div>
     <div class='sidebar-button'>
         <a class='active' href='/workspace'><img src='/images/kanban.png' height='25' width='25'>Kanban Board</a>

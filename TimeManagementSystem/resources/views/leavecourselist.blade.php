@@ -28,20 +28,33 @@
                             <th>Matrics</th>
                             <th>Leave Duration</th>
                             <th>Requested Date</th>
-                            <th>Course</th>
+                            <th>Reason</th>
                             <th>Status</th>
                             <th></th>
                         </thead>
                         <tbody>
-                            
+                        @foreach ($leaves as $leave)
                             <tr>
-                                <td>First Last</td>
-                                <td>P00000001</td>
-                                <td>20-06-2023 ---> 23-06-2023</td>
-                                <td>18-06-2023</td>
+                                <td>{{ $leave->f_name }} {{ $leave->l_name }}</td>
+                                <td>{{ $leave->matrics }} </td>
+                                <td>@php echo date("d-m-Y",strtotime($leave->leave_startdate)); @endphp ----> @php echo date("d-m-Y",strtotime($leave->leave_enddate)); @endphp</td>
+                                <td>@php echo date("d-m-Y",strtotime($leave->application_date)); @endphp</td>
+                                <td>{{ $leave->reason }}</td>
+                                @if ($leave->status == 0) 
                                 <td style="color:red;">Unapproved</td>
-                                <td style="text-align:center;"><button class="addbutton" data-modal-target="#editmodal">VIEW</button></td>
+                                @elseif ($leave->status == 1) 
+                                <td style="color:green;">Approved</td>
+                                @endif
+                                <td style="text-align:center;">
+                                <form action="{{ route('leavecourseapproval') }}" method=post>
+                                    @csrf
+                                    <input type="hidden" name="leave_id" value="{{ $leave->leave_id }}">
+                                    <input type="hidden" name="approval_id" value="{{ $leave->approval_id }}">
+                                    <button class="addbutton" data-modal-target="#editmodal">VIEW</button>
+                                </form>
+                                </td>
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -32,7 +32,7 @@
                                 @foreach ($students as $student)
                                 <tr>
                                     <td>
-                                        {{ $student->f_name }} {{ $student->l_name }} {{$student->status}}
+                                        {{ $student->f_name }} {{ $student->l_name }}
                                         <input type="hidden" id="student_id" name="att[{{$counter}}][student]" value="{{ $student->id }}">
                                     </td>
                                     <td style="display:flex; width:500px">

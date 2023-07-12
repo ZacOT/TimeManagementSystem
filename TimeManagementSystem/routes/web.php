@@ -74,11 +74,16 @@ Route::group(['middleware' => ['hop']], function () {
 
     Route::get('/assignclass', [HOPController::class, 'getAssign'])->middleware(Authenticate::class)->name('assignclass');
     Route::post('/assignstudents', [HOPController::class, 'assignStudents'])->middleware(Authenticate::class)->name('assignstudents');
+
+    Route::get('/leaveapprovallist', [HOPController::class, 'getLeaves'])->middleware(Authenticate::class)->name('leaveapprovallist');
+    Route::post('/leaveapproval', [HOPController::class, 'getLeaveApproval'])->middleware(Authenticate::class)->name('leaveapproval');
 });
 
 /* Lecturer */
 Route::group(['middleware' => ['lecturer']], function () {
-    Route::get('/leaveapprovallist', [LecturerController::class, 'getRelatedLeaves'])->middleware(Authenticate::class)->name('leaveapprovallist');
+    Route::get('/leavecourselist', [LecturerController::class, 'getRelatedLeaves'])->middleware(Authenticate::class)->name('leavecourselist');
+    Route::post('/leavecourseapproval', [LecturerController::class, 'getLeaveCourseApproval'])->middleware(Authenticate::class)->name('leavecourseapproval');
+    Route::post('/approveleavecourse', [LecturerController::class, 'approveLeaveCourse'])->middleware(Authenticate::class)->name('approveleavecourse');
 });
 
 /* User */
@@ -114,13 +119,21 @@ Route::group(['middleware' => ['login']], function () {
 Route::get('/attendanceleave', [LecturerController::class, 'getAttendanceLeave'])->middleware(Authenticate::class)->name('attendanceleave');
 Route::get('/attendance', [LecturerController::class, 'getAttendance'])->middleware(Authenticate::class)->name('attendance');
 Route::post('/insertattendance', [LecturerController::class, 'insertAttendance'])->middleware(Authenticate::class)->name('insertattendance');
+
 Route::get('/attendancelist', [LecturerController::class, 'getAttendanceList'])->middleware(Authenticate::class)->name('attendancelist');
 Route::post('/attendancelist', [LecturerController::class, 'getAttendanceList'])->middleware(Authenticate::class)->name('attendancelist');
 Route::post('/updateattendancelist', [LecturerController::class, 'updateAttendanceList'])->middleware(Authenticate::class)->name('updateattendancelist');
 
+Route::get('/checkattendance', [LeaveController::class, 'checkAttendance'])->middleware(Authenticate::class)->name('checkAttendance');
+
 Route::get('/applyleave', [LeaveController::class, 'applyLeave'])->middleware(Authenticate::class)->name('applyleave');
 Route::post('/insertleave', [LeaveController::class, 'insertLeave'])->middleware(Authenticate::class)->name('insertleave');
+
+Route::get('/leaveapplication', [LeaveController::class, 'getLeaveApplication'])->middleware(Authenticate::class)->name('leaveapplication');
+Route::get('/leavelist', [LeaveController::class, 'getLeavesList'])->middleware(Authenticate::class)->name('leavelist');
+
 Route::post('/addselclass', [LeaveController::class, 'addSelClass'])->middleware(Authenticate::class)->name('addselclass');
+
 Route::get('/debug', [HOPController::class, 'getLeaves'])->name('debug');
 Route::post('/debug', [LecturerController::class, 'debug'])->name('debug');
 

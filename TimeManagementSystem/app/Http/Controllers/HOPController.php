@@ -148,16 +148,12 @@ class HOPController extends Controller
         ->where('programs.hop_id', Auth::user()->id)
         ->get();
 
-
-        $leaves = DB::table('leave_application')
-        ->where('leave_id', $request->input('leave_id'))
-        ->update(['status', 1]);
-
         //Get all Leaves
         $getleaves = DB::table('leave_application')
         ->where('leave_id', $request->input('leave_id'))
         ->get();
-    
+        
+        $hopleaves = array();
         foreach($getleaves as $leave){
             //Find all connected course leave
             $leave_id = $leave->leave_id;
@@ -167,9 +163,64 @@ class HOPController extends Controller
                 if($approve->status == 0){
                     break;
                 }
-                return view('leaveslist', compact('leaves'));
+                else{
+                    array_push($hopleave, $leave);
+                }
             }
         }
-        return view('debug', compact('leaves'));
+        return view('leaveapprovallist', compact('hopleaves'));
     }
+
+    public function getRelatedLeaves(){
+        
+        //related leaves to be approved
+        $leaves = DB::table('leave_approval')
+        ->join('class','leave_approval.class_id','=','class.class_id')
+        ->join('class_type', 'class.class_type','=','class_type.classtype_id')
+        ->join('leave_application', 'leave_approval.leave_id','=','leave_application.leave_id')
+        ->join('users', 'leave_application.applicant_id','=','users.id')
+        ->where('lec_id', Auth::user()->id)
+        ->get();
+
+        return view('leaveapprovallist',compact('leaves'));
+    }
+
+    public function getLeaveApproval(Request $request){
+
+                //get leave id
+                $leave_id = $request->input('leave_id');
+
+
+                
+                //get leave
+                $leave = DB::table('leave_application')
+                ->join('users','leave_application.applicant_id','=','users.id') //get details of applicant
+                ->where('leave_id',$leave_id)
+                ->first();
+                $student = DB::table('users')->where('id',$leave->applicant_id)->first();
+                //get related leave approvals
+                $leaveapprovals = DB::table('leave_approval')
+                ->join('users','leave_approval.lec_id','=','users.id') //get details of lecturer
+                ->join('class','leave_approval.class_id','=','class.class_id') //get details of class
+                ->join('course','class.course_id','=','course.course_id') //get details of class
+                ->where('leave_id',$leave_id)->get();
+        
+                return view('leaveapproval', compact('student','leave','leaveapprovals'));
+    }
+
+    public function approveLeaveCourse(Request $request){
+        $approval_id = $request->input('approval_id');
+        $date = date('Y-m-d');
+
+        $data = array(
+            'comment' => $request->input('comment'),
+            'status' => 1,
+            'date' => $date,
+        );
+
+        DB::table('leave_approval')->where('approval_id',$approval_id)->update($data);
+
+        return redirect()->route('leaveapprovallist');
+    }
+
 }

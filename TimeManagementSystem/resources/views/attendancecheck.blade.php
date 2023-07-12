@@ -28,14 +28,14 @@
                             <th>STATUS</th>
                         </thead>
                         <tbody>
-                            @foreach ($attendances as $attendance)
+                            @foreach ($absents as $absents)
                             <tr>
-                                <td>{{ $attendance->course_name }}</td>
-                                <td>{{ $attendance->classtype_name }}</td>
-                                <td>{{ $attendance->class_name }}</td>
-                                <td>@php echo date("l", strtotime($attendance->att_date ));@endphp</td>
-                                <td>@php echo date("d-m-Y",strtotime($attendance->att_date)); @endphp</td>
-                                <td>@php echo date("h:ia",strtotime($attendance->att_starttime)); echo" - ";echo date("h:ia",strtotime($attendance->att_endtime)); @endphp</td>
+                                <td>{{ $absents->course_name }}</td>
+                                <td>{{ $absents->classtype_name }}</td>
+                                <td>{{ $absents->class_name }}</td>
+                                <td>@php echo date("l", strtotime($absents->att_date ));@endphp</td>
+                                <td>@php echo date("d-m-Y",strtotime($absents->att_date)); @endphp</td>
+                                <td>@php echo date("h:ia",strtotime($absents->att_starttime)); echo" - ";echo date("h:ia",strtotime($absents->att_endtime)); @endphp</td>
                                 <td><text style="color:red">ABSENT</td>
                             </tr>
                             @endforeach
