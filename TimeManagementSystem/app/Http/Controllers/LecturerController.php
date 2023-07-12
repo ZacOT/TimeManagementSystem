@@ -23,7 +23,6 @@ class LecturerController extends Controller
         ->join('users', 'class.lecturer_id', '=', 'users.id')
         ->join('course', 'class.course_id', '=', 'course.course_id')
         ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-
         ->get();
 
         $classes = DB::table('class')
@@ -31,12 +30,20 @@ class LecturerController extends Controller
         ->join('users', 'class.lecturer_id', '=', 'users.id')
         ->join('course', 'class.course_id', '=', 'course.course_id')
         ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
-
         ->where('class.sem_id', $cur_sem->sem_id)
+        ->where('class.lecturer_id', Auth::user()->id)
         ->get();
         return view('attendance', compact('classes','attendances'));
     }
     public function insertAttendance(Request $request){
+
+        $this->validate($request, [
+            'class_id'=>'required',
+            'date'=>'required',
+            'starttime'=>'required',
+            'endtime'=>'required',
+        ]);
+
         $class_id = $request->input('class_id');
         $date = $request->input('date');
         $starttime = $request->input('starttime');
@@ -74,19 +81,25 @@ class LecturerController extends Controller
 
     public function getAttendanceList(Request $request){
         
-        $class = DB::table('class')->where('class_id', $request->class_id)->first();
+        $attendance = DB::table('attendance_list')->where('att_id', $request->att_id)->first();
 
         $students = DB::table('attendance_linker')
         ->join('users', 'attendance_linker.student_id', '=', 'users.id')
-        ->where('att_id',$request->att_id)
+        ->where('att_id', $attendance->att_id)
         ->get();
 
+        $class= DB::table('class')
+        ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
+        ->join('users', 'class.lecturer_id', '=', 'users.id')
+        ->join('course', 'class.course_id', '=', 'course.course_id')
+        ->join('semesters', 'class.sem_id', '=', 'semesters.sem_id')
+        ->where('class_id', $attendance->class_id)
+        ->first();
 
-        $redir = 'assignclass?class_id=';
-        $redir .= strval($class->class_id);
+        $redir = 'attendancelist?att_id=';
+        $redir .= strval($attendance->att_id);
 
-        return view("/assignclass", compact('class','students'));
-
+        return view("/attendancelist", compact('attendance','students','class'));
     }
 
     public function updateAttendanceList(Request $request){

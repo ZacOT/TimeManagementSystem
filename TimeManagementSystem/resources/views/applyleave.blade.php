@@ -19,53 +19,61 @@
         <div class="wraper">
             @include('sidebar')
             <div class="dashboard">
-            <form action="/insertLeave" method="post">
+            <form action="/insertleave" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="objective" style="background-color:peachpuff;">
                     <p style="text-align:center; font-size:18px;">Student Leave Application Form</p>
                 </div>
                 <div class="objective" style="background-color:bisque; margin-top:0px;">
                     <p>Student: {{$student->f_name}} {{$student->l_name}}</p>
+                    <input type="hidden" name="applicant_id" value="{{$student->id}}">
                     <p>Matriculation No: {{$student->matrics}}</p>
                     <p>Email: {{$student->email}}</p>
                     <p>Contact: {{$student->contact_no}}</p>
-                    <p>From: 20-06-2023 To: 23-06-2023</p>
-                    <p>Reason: Sick Leave</p>
-                    <p>Supporting Document:</p>
-                    <img src="/images/documents/test.png" width="200px" height="200px"/>
+                    <p>From: <input type="date" name="start_date"> To: <input type="date" name="end_date"></p>
+                    <p>Reason:</p><textarea rows="4" cols="100" style="resize: none;" name="reason"></textarea>
+                    <p>Supporting Document: <input type="file" accept="image/*" name="document" onchange="loadFile(event)" ></p>
+                    <img id="output" width="200px" height="200px"/>
 
+                </div>
+
+                <div class="objective" style="background-color:skyblue;">
+                    <p>PLEASE ENSURE ALL DETAILS ARE CORRECT BEFORE SUBMITTING</p>
                 </div>
 
                 <div class="objective" style="background-color:peachpuff;">
-                    <p style="font-size:18px;">Courses Class</p>
-                    <p style="font-size:14px;">YOUR AFFECTED COURSE</p>
+                    <p style="font-size:18px;">Affected Courses Class</p>
+                    <p style="font-size:14px;">Check the classes that will be affected</p>
                 </div>
                 <div class="objective" style="background-color:bisque; margin-top:0px;">
 
-                    <table id="att_table"style="border: solid 1px black; width:100%; margin-top:50px">
+                    <table id="att_table"style="border: solid 1px black; width:100%;">
                         <tr>
-
+                            <td style="width:20px; border:solid 1px black; font-weight: bolder;"></td>
                             <td style="border:solid 1px black; font-weight: bolder;">Course Class</td>
                             <td style="border:solid 1px black; font-weight: bolder;">Lecturer</td>
                             <td style="border:solid 1px black; font-weight: bolder;">Day</td>
                             <td style="border:solid 1px black; font-weight: bolder;">Time</td>
-                            <td style="border:solid 1px black; font-weight: bolder;">Status</td>
                         </tr>
-
+                        @php $counter=0; @endphp
+                        @foreach ($classes as $class)
                         <tr>
-                        <td style="border:solid 1px black;">C01 - Course1 - Tutorial</td>
-                            <td style="border:solid 1px black;">Lecturer First</td>
-                            <td style="border:solid 1px black;">Monday</td>
-                            <td style="border:solid 1px black;">12:00pm - 2:00pm</td>
-                            <td style="border:solid 1px black;">Unapproved</td>
+                            <td style="width:20px; border:solid 1px black; font-weight: bolder;">
+                                <input type="checkbox" id="affectedclass{{$counter}}" name="affectedclass[{{ $counter}} ][class_id]" value="{{$class->class_id}}">
+                            </td>
+                            <td style="border:solid 1px black;">[{{$class->course_code}}] {{$class->course_name}} - {{$class->classtype_name}} - {{$class->class_name}}</td>
+                            <td style="border:solid 1px black;">{{$class->f_name}} {{$class->l_name}}</td>
+                            <td style="border:solid 1px black;">@php echo date("l", strtotime($class->class_firstdate ));@endphp</td>
+                            <td style="border:solid 1px black;">@php echo date("h:ia", strtotime($class->class_starttime)); echo " - "; echo date("h:ia",strtotime($class->class_endtime));@endphp</td>
                         </tr>
-                    </form>
+                        @php $counter++; @endphp
+                        @endforeach
                     </table>
-                    <div style="text-align:center; margin-top:50px; margin-bottom:50px;">
-                        Comment:</p><textarea rows="4" cols="50" style="resize: none;"></textarea><br>
-                        <button style="height:40px;width:100px;">APPROVE</button>
-                        <button style="height:40px;width:100px;">UNAPPROVE</button>
-                    </div>
                 </div>
+                    <div style="text-align:center; margin-top:50px; margin-bottom:50px;">
+                        <input style="height:50px;"type="submit" value="APPLY FOR LEAVE">
+                    </div>
+                    </form>
             </div>
         </div>
     </body>

@@ -73,6 +73,7 @@ Route::group(['middleware' => ['hop']], function () {
     Route::post('/insertclass', [HOPController::class, 'insertClassList'])->middleware(Authenticate::class)->name('insertclass');
 
     Route::get('/assignclass', [HOPController::class, 'getAssign'])->middleware(Authenticate::class)->name('assignclass');
+    Route::post('/assignstudents', [HOPController::class, 'assignStudents'])->middleware(Authenticate::class)->name('assignstudents');
 });
 
 /* Lecturer */
@@ -118,6 +119,7 @@ Route::post('/attendancelist', [LecturerController::class, 'getAttendanceList'])
 Route::post('/updateattendancelist', [LecturerController::class, 'updateAttendanceList'])->middleware(Authenticate::class)->name('updateattendancelist');
 
 Route::get('/applyleave', [LeaveController::class, 'applyLeave'])->middleware(Authenticate::class)->name('applyleave');
+Route::post('/insertleave', [LeaveController::class, 'insertLeave'])->middleware(Authenticate::class)->name('insertleave');
 Route::post('/addselclass', [LeaveController::class, 'addSelClass'])->middleware(Authenticate::class)->name('addselclass');
 Route::get('/debug', [HOPController::class, 'getLeaves'])->name('debug');
 Route::post('/debug', [LecturerController::class, 'debug'])->name('debug');

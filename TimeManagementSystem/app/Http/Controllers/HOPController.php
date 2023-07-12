@@ -70,11 +70,15 @@ class HOPController extends Controller
 
 
     public function getAssign(Request $request){
-        
 
-        $students = DB::table('attendance_linker')
-        ->join('users', 'attendance_linker.student_id', '=', 'users.id')
+        $students = DB::table('users')
+        ->where('role', 0)
         ->get();
+
+        $assignedstudents = DB::table('class_linker')
+        ->where('class_id', $request->input('class_id'))
+        ->pluck('student_id')->toArray();
+
 
         $class= DB::table('class')
         ->join('class_type', 'class.class_type', '=', 'class_type.classtype_id')
@@ -84,9 +88,56 @@ class HOPController extends Controller
         ->where('class_id', $request->input('class_id'))
         ->first();
 
-        return view("/assignstudent", compact('students','class'));
+        return view("/assignstudent", compact('students','assignedstudents','class'));
     }
     
+    public function assignStudents(Request $request){
+
+        $class_id = $request->input('class_id');
+        $students = $request->input('assign');
+
+        $assignedstudents = DB::table('class_linker')
+        ->where('class_id', $request->input('class_id'))
+        ->pluck('student_id')->toArray();
+
+        //Check if students are assigned already
+        foreach ($students as $s){
+            $student_id = $s['student'];
+            $status = $s['status'];
+            
+            //if already assigned then update
+            if(in_array($student_id, $assignedstudents)){
+                //if already assigned then unassign
+                if($status == 0){
+                    DB::table('class_linker')->where('class_id', $class_id)->where('student_id', $student_id)->delete();
+                }
+                //if assigned remain same
+                else if($status == 1){
+
+                }
+            }
+            //if not assigned then insert
+            else{
+                //if assign
+                if($status == 1){
+                    $data = array(
+                        'class_id'=>$class_id,
+                        'student_id'=>$student_id
+                    );
+                    DB::table('class_linker')->insert($data);
+                }
+                //if unassigned remain same
+                else if($status == 0){
+
+                }
+            }
+        }
+
+        $redir = 'assignclass?class_id=';
+        $redir .= strval($class_id);
+        return redirect($redir);
+    }
+
     public function getLeaves(Request $request){
 
         //Get Leaves
