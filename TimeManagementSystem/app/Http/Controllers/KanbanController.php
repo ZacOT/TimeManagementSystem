@@ -8,10 +8,15 @@ use Illuminate\Support\Facades\DB;
 class KanbanController extends Controller
 {   
     public function getWorkspace(){
+        $memboards = DB::table('kanban_linker')->where('member_id',Auth::user()->id)->get();
 
-        $kboards = DB::table('kanban_board')->where('owner_id',Auth::user()->id)->get();
+        $kboards = DB::table('kanban_board')
+        ->where('owner_id',Auth::user()->id)//where owner
+        ->get();
+       
+        
 
-        return view('workspace', compact('kboards'));
+        return view('workspace', compact('kboards','memboards'));
     }
     
     public function getKanbanBoard(Request $request){
@@ -116,17 +121,19 @@ class KanbanController extends Controller
 
     public function editKanbanCard(Request $request){
         $this->validate($request, [
-            'kcat_id'=>'required',
+            'kcard_id'=>'required',
+            'category'=>'required',
             'title'=>'required',
-            'description'=>'required',
+            'edescription'=>'required',
             'due'=>'required',
         ]);
 
+
         $kcard_id = $request->input('kcard_id');
         $kboard_id = $request->input('kboard_id');
-        $kcat_id = $request->input('kcat_id');
+        $kcat_id = $request->input('category');
         $title = $request->input('title');
-        $description = $request->input('description');
+        $description = $request->input('edescription');
         $due = $request->input('due');
 
         $data=array(

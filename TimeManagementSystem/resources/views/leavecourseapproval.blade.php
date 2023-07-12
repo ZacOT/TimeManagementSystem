@@ -64,7 +64,7 @@
 
                     @if ($leaveapproval->status == 0)
                     <div style="text-align:center; margin-top:50px; margin-bottom:50px;">
-                    <form action="{{ Route('approveleavecourse') }}" method="post" id="approveform">
+                    <form action="{{ Route('approveleave') }}" method="post" id="approveform">
                         @csrf
                         <input type="hidden" name="approval_id" value="{{$leaveapproval->approval_id}}">
                         Comment:</p><textarea name="comment" for="approveform" rows="4" cols="50" style="resize: none;"></textarea><br>

@@ -33,7 +33,7 @@
                             <th></th>
                         </thead>
                         <tbody>
-                        @foreach ($hopleaves as $leave)
+                        @foreach ($leaves as $leave)
                             <tr>
                                 <td>{{ $leave->f_name }} {{ $leave->l_name }}</td>
                                 <td>{{ $leave->matrics }} </td>

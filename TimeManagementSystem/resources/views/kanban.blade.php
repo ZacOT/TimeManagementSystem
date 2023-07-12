@@ -18,6 +18,11 @@
         <div class="wraper">
             @include('sidebar')
             <div class="dashboard">
+            @error('kcard_id'){{ $message }}@enderror
+            @error('category'){{ $message }}@enderror
+            @error('title'){{ $message }}@enderror
+            @error('description'){{ $message }}@enderror
+            @error('due'){{ $message }}@enderror
                 <div>
                     <button class="editbutton" data-modal-target="#modal" style="margin-top:25px;margin-left:110px;">Add Category</button>
                 </div>
@@ -43,7 +48,7 @@
                             <ul class="drag-inner-list" id="1">
                                 @foreach ($cards as $card)
                                 @if ($card->kcat_id === $category->kcat_id)
-                                <a data-modal-target="#emodal" style="text-decoration:none; color:black;" onclick="editCardBtn({{$card->kcard_id}}, '{{$card->title}}', '{{$card->description}}')">
+                                <a data-modal-target="#emodal" style="text-decoration:none; color:black;" onclick="editCardBtn({{$card->kcard_id}}, '{{$card->title}}', '{{$card->description}}', '@php echo date('Y-m-d\TH:i',strtotime($card->end_date));@endphp', {{$card->kcat_id}})">
                                     <li class="drag-item">
                                         <b>{{ $card->title }}</b> 
                                         <br>{{ $card->description }}
@@ -115,14 +120,17 @@
                         <button data-close-button class="close-button">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post">
-                            <input type="text" placeholder="Title" value="Complete Kanban"></input><br>
-                            <textarea name="description" placeholder="Description" value="Complete the kanban add edit functions" form="okrform" style="width:200px; height:70px">Complete the kanban add edit functions</textarea><br>
-                            Due: <input type="datetime-local" placeholder="Due" value="2023-07-03T10:00:00.00"></input><br>
-                            Category:<select>
-                                <option>To Do</option>
-                                <option>On Hold</option>
-                                <option>Completed</option>
+                        <form action="{{ Route('editkanbancard') }}" method="post" form="ecardform">
+                            @csrf
+                            <input type=hidden id="eboard" name="kboard_id" value="{{ $kboard_id }}"></input>
+                            <input type=hidden id="ecard_id" name="kcard_id" value=""></input>
+                            <input id="etitle" name="title" type="text" placeholder="Title" value=""></input><br>
+                            <textarea id="edescription" name="edescription" placeholder="Description" value="" for="ecardform" style="width:200px; height:70px"></textarea><br>
+                            Due: <input id="edue" name="due" type="datetime-local" placeholder="Due" value=""></input><br>
+                            Category:<select id="ecategory" name="category">
+                            @foreach ($categories as $category)
+                                <option value="{{$category->kcat_id}}">{{$category->name}}</option>
+                            @endforeach
                             </select><br>
                             <button type="submit" class="editbutton">Edit Card</button>
                         </form>
@@ -165,10 +173,16 @@
             input.value = kcat_id;
         }
 
-        function editCardBtn(kcard_id) {
+        function editCardBtn(kcard_id, title, description, due, category) {
             input = document.getElementById("comment_kcard_id");
             input.value = "";
             input.value = kcard_id;
+            document.getElementById("ecard_id").value = kcard_id;
+            document.getElementById("etitle").value = title;
+            document.getElementById("edescription").value = description;
+            document.getElementById("edue").value = due;
+            document.getElementById("ecategory").value = category;
+
 
             commentbox = document.getElementById("commentbox");
             commentbox.replaceChildren();

@@ -77,6 +77,7 @@ Route::group(['middleware' => ['hop']], function () {
 
     Route::get('/leaveapprovallist', [HOPController::class, 'getLeaves'])->middleware(Authenticate::class)->name('leaveapprovallist');
     Route::post('/leaveapproval', [HOPController::class, 'getLeaveApproval'])->middleware(Authenticate::class)->name('leaveapproval');
+    Route::post('/approveleave', [HOPController::class, 'approveLeave'])->middleware(Authenticate::class)->name('approveleave');
 });
 
 /* Lecturer */
@@ -95,6 +96,7 @@ Route::group(['middleware' => ['login']], function () {
     Route::get('/kanban', [KanbanController::class, 'getKanbanBoard'])->middleware(Authenticate::class);
     Route::post('/insertkanbanboard', [KanbanController::class, 'insertKanbanBoard'])->middleware(Authenticate::class)->name('insertkanbanboard');
     Route::post('/insertkanbancard', [KanbanController::class, 'insertKanbanCard'])->middleware(Authenticate::class)->name('insertkanbancard');
+    Route::post('/editkanbancard', [KanbanController::class, 'editKanbanCard'])->middleware(Authenticate::class)->name('editkanbancard');
     Route::post('/insertkanbancategory', [KanbanController::class, 'insertKanbanCategory'])->middleware(Authenticate::class)->name('insertkanbancategory');
     Route::post('/updatekanbancategory', [KanbanController::class, 'updateKanbanCategory'])->middleware(Authenticate::class)->name('updatekanbancategory');
     Route::post('/insertcomment', [KanbanController::class, 'insertComment'])->middleware(Authenticate::class)->name('insertcomment');
